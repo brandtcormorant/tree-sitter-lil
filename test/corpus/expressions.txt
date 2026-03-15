@@ -1,0 +1,133 @@
+===
+binary arithmetic
+===
+
+1 + 2 * 3
+
+---
+
+(source_file
+  (binary_expression
+    left: (integer)
+    right: (binary_expression
+      left: (integer)
+      right: (integer))))
+
+===
+comparison
+===
+
+a < b
+
+---
+
+(source_file
+  (binary_expression
+    left: (identifier)
+    right: (identifier)))
+
+===
+equality
+===
+
+x == y
+
+---
+
+(source_file
+  (binary_expression
+    left: (identifier)
+    right: (identifier)))
+
+===
+inequality
+===
+
+x != y
+
+---
+
+(source_file
+  (binary_expression
+    left: (identifier)
+    right: (identifier)))
+
+===
+modulo
+===
+
+n % 15
+
+---
+
+(source_file
+  (binary_expression
+    left: (identifier)
+    right: (integer)))
+
+===
+unary negation
+===
+
+-x
+
+---
+
+(source_file
+  (unary_expression
+    operand: (identifier)))
+
+===
+unary not
+===
+
+!x
+
+---
+
+(source_file
+  (unary_expression
+    operand: (identifier)))
+
+===
+parenthesized expression
+===
+
+(1 + 2)
+
+---
+
+(source_file
+  (parenthesized_expression
+    (binary_expression
+      left: (integer)
+      right: (integer))))
+
+===
+subtraction
+===
+
+3 - 10
+
+---
+
+(source_file
+  (binary_expression
+    left: (integer)
+    right: (integer)))
+
+===
+chained arithmetic
+===
+
+n + (n - 1)
+
+---
+
+(source_file
+  (binary_expression
+    left: (identifier)
+    right: (parenthesized_expression
+      (binary_expression
+        left: (identifier)
+        right: (integer)))))

@@ -1,0 +1,42 @@
+===
+line comment
+===
+
+// this is a comment
+
+---
+
+(source_file
+  (comment))
+
+===
+comment before expression
+===
+
+// expect: 7
+1 + 2 * 3
+
+---
+
+(source_file
+  (comment)
+  (binary_expression
+    left: (integer)
+    right: (binary_expression
+      left: (integer)
+      right: (integer))))
+
+===
+multiple comments
+===
+
+// first comment
+// second comment
+42
+
+---
+
+(source_file
+  (comment)
+  (comment)
+  (integer))

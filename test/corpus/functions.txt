@@ -1,0 +1,158 @@
+===
+function definition
+===
+
+let square = fn(x) { return x * x }
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (function_definition
+      parameters: (parameter_list
+        (identifier))
+      body: (block
+        (return_expression
+          (binary_expression
+            left: (identifier)
+            right: (identifier)))))))
+
+===
+function with multiple parameters
+===
+
+let add = fn(a, b) { return a + b }
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (function_definition
+      parameters: (parameter_list
+        (identifier)
+        (identifier))
+      body: (block
+        (return_expression
+          (binary_expression
+            left: (identifier)
+            right: (identifier)))))))
+
+===
+function with no parameters
+===
+
+let f = fn() { return x }
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (function_definition
+      body: (block
+        (return_expression
+          (identifier))))))
+
+===
+function call
+===
+
+square(5)
+
+---
+
+(source_file
+  (call_expression
+    function: (identifier)
+    arguments: (argument_list
+      (integer))))
+
+===
+function call with multiple arguments
+===
+
+add(1, 2)
+
+---
+
+(source_file
+  (call_expression
+    function: (identifier)
+    arguments: (argument_list
+      (integer)
+      (integer))))
+
+===
+function call with no arguments
+===
+
+f()
+
+---
+
+(source_file
+  (call_expression
+    function: (identifier)))
+
+===
+higher order function call
+===
+
+apply(double, 15)
+
+---
+
+(source_file
+  (call_expression
+    function: (identifier)
+    arguments: (argument_list
+      (identifier)
+      (integer))))
+
+===
+nested closure
+===
+
+let make_adder = fn(n) {
+  return fn(x) { return x + n }
+}
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (function_definition
+      parameters: (parameter_list
+        (identifier))
+      body: (block
+        (return_expression
+          (function_definition
+            parameters: (parameter_list
+              (identifier))
+            body: (block
+              (return_expression
+                (binary_expression
+                  left: (identifier)
+                  right: (identifier))))))))))
+
+===
+implicit return in function body
+===
+
+let double = fn(n) { n * 2 }
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (function_definition
+      parameters: (parameter_list
+        (identifier))
+      body: (block
+        (binary_expression
+          left: (identifier)
+          right: (integer))))))

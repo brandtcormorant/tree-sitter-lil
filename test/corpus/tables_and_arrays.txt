@@ -1,0 +1,175 @@
+===
+table literal
+===
+
+{ x: 10, y: 20 }
+
+---
+
+(source_file
+  (table_literal
+    (table_field
+      key: (identifier)
+      value: (integer))
+    (table_field
+      key: (identifier)
+      value: (integer))))
+
+===
+table field access
+===
+
+t.x + t.y
+
+---
+
+(source_file
+  (binary_expression
+    left: (field_expression
+      object: (identifier)
+      field: (identifier))
+    right: (field_expression
+      object: (identifier)
+      field: (identifier))))
+
+===
+table with functions
+===
+
+{
+  double: fn(x) { return x * 2 },
+  answer: 42
+}
+
+---
+
+(source_file
+  (table_literal
+    (table_field
+      key: (identifier)
+      value: (function_definition
+        parameters: (parameter_list
+          (identifier))
+        body: (block
+          (return_expression
+            (binary_expression
+              left: (identifier)
+              right: (integer))))))
+    (table_field
+      key: (identifier)
+      value: (integer))))
+
+===
+array literal
+===
+
+[1, 2, 3]
+
+---
+
+(source_file
+  (array_literal
+    (integer)
+    (integer)
+    (integer)))
+
+===
+empty array
+===
+
+[]
+
+---
+
+(source_file
+  (array_literal))
+
+===
+empty braces
+===
+
+{}
+
+---
+
+(source_file
+  (table_literal))
+
+===
+index expression
+===
+
+arr[0]
+
+---
+
+(source_file
+  (index_expression
+    object: (identifier)
+    index: (integer)))
+
+===
+method call
+===
+
+m.double(21)
+
+---
+
+(source_file
+  (call_expression
+    function: (field_expression
+      object: (identifier)
+      field: (identifier))
+    arguments: (argument_list
+      (integer))))
+
+===
+let with table
+===
+
+let t = { x: 10, y: 32 }
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (table_literal
+      (table_field
+        key: (identifier)
+        value: (integer))
+      (table_field
+        key: (identifier)
+        value: (integer)))))
+
+===
+trailing comma in table
+===
+
+{ x: 1, y: 2, }
+
+---
+
+(source_file
+  (table_literal
+    (table_field
+      key: (identifier)
+      value: (integer))
+    (table_field
+      key: (identifier)
+      value: (integer))))
+
+===
+trailing comma in array
+===
+
+[1, 2, 3,]
+
+---
+
+(source_file
+  (array_literal
+    (integer)
+    (integer)
+    (integer)))

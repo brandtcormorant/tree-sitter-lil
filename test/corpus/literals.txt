@@ -1,0 +1,98 @@
+===
+integers
+===
+
+42
+
+---
+
+(source_file
+  (integer))
+
+===
+floats
+===
+
+3.14
+
+---
+
+(source_file
+  (float))
+
+===
+strings
+===
+
+"hello"
+
+---
+
+(source_file
+  (string))
+
+===
+string with escapes
+===
+
+"hello \"world\""
+
+---
+
+(source_file
+  (string))
+
+===
+tags
+===
+
+:ok
+
+---
+
+(source_file
+  (tag))
+
+===
+true
+===
+
+true
+
+---
+
+(source_file
+  (true))
+
+===
+false
+===
+
+false
+
+---
+
+(source_file
+  (false))
+
+===
+nil
+===
+
+nil
+
+---
+
+(source_file
+  (nil))
+
+===
+identifier
+===
+
+x
+
+---
+
+(source_file
+  (identifier))

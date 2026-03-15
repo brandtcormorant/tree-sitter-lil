@@ -1,0 +1,227 @@
+===
+match with tag patterns
+===
+
+match status {
+  :ok => 200,
+  :not_found => 404,
+  :error => 500,
+  _ => 0
+}
+
+---
+
+(source_file
+  (match_expression
+    scrutinee: (identifier)
+    (match_body
+      (match_arm
+        pattern: (tag)
+        body: (integer))
+      (match_arm
+        pattern: (tag)
+        body: (integer))
+      (match_arm
+        pattern: (tag)
+        body: (integer))
+      (match_arm
+        pattern: (identifier)
+        body: (integer)))))
+
+===
+match with boolean scrutinee
+===
+
+match a > b {
+  true => a,
+  _ => b
+}
+
+---
+
+(source_file
+  (match_expression
+    scrutinee: (binary_expression
+      left: (identifier)
+      right: (identifier))
+    (match_body
+      (match_arm
+        pattern: (true)
+        body: (identifier))
+      (match_arm
+        pattern: (identifier)
+        body: (identifier)))))
+
+===
+match with block body
+===
+
+match 10 {
+  0 => acc,
+  n => {
+    acc = acc + n
+    continue n - 1
+  }
+}
+
+---
+
+(source_file
+  (match_expression
+    scrutinee: (integer)
+    (match_body
+      (match_arm
+        pattern: (integer)
+        body: (identifier))
+      (match_arm
+        pattern: (identifier)
+        body: (block
+          (assignment
+            name: (identifier)
+            value: (binary_expression
+              left: (identifier)
+              right: (identifier)))
+          (continue_expression
+            (binary_expression
+              left: (identifier)
+              right: (integer))))))))
+
+===
+match with continue
+===
+
+match 10 {
+  0 => :done,
+  n => continue n - 1
+}
+
+---
+
+(source_file
+  (match_expression
+    scrutinee: (integer)
+    (match_body
+      (match_arm
+        pattern: (integer)
+        body: (tag))
+      (match_arm
+        pattern: (identifier)
+        body: (continue_expression
+          (binary_expression
+            left: (identifier)
+            right: (integer)))))))
+
+===
+nested match
+===
+
+match 1 { _ => match 0 { 0 => 100 } }
+
+---
+
+(source_file
+  (match_expression
+    scrutinee: (integer)
+    (match_body
+      (match_arm
+        pattern: (identifier)
+        body: (match_expression
+          scrutinee: (integer)
+          (match_body
+            (match_arm
+              pattern: (integer)
+              body: (integer))))))))
+
+===
+deeply nested match
+===
+
+match 1 {
+  1 => match 2 {
+    2 => match 3 {
+      3 => :found,
+      _ => :nope
+    },
+    _ => :nope
+  },
+  _ => :nope
+}
+
+---
+
+(source_file
+  (match_expression
+    scrutinee: (integer)
+    (match_body
+      (match_arm
+        pattern: (integer)
+        body: (match_expression
+          scrutinee: (integer)
+          (match_body
+            (match_arm
+              pattern: (integer)
+              body: (match_expression
+                scrutinee: (integer)
+                (match_body
+                  (match_arm
+                    pattern: (integer)
+                    body: (tag))
+                  (match_arm
+                    pattern: (identifier)
+                    body: (tag)))))
+            (match_arm
+              pattern: (identifier)
+              body: (tag)))))
+      (match_arm
+        pattern: (identifier)
+        body: (tag)))))
+
+===
+match with integer pattern
+===
+
+match n % 15 {
+  0 => :fizzbuzz,
+  _ => n
+}
+
+---
+
+(source_file
+  (match_expression
+    scrutinee: (binary_expression
+      left: (identifier)
+      right: (integer))
+    (match_body
+      (match_arm
+        pattern: (integer)
+        body: (tag))
+      (match_arm
+        pattern: (identifier)
+        body: (identifier)))))
+
+===
+let binding from match
+===
+
+let bigger = match a > b {
+  true => a,
+  _ => b
+}
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (match_expression
+      scrutinee: (binary_expression
+        left: (identifier)
+        right: (identifier))
+      (match_body
+        (match_arm
+          pattern: (true)
+          body: (identifier))
+        (match_arm
+          pattern: (identifier)
+          body: (identifier))))))

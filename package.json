@@ -1,0 +1,13 @@
+{
+  "name": "tree-sitter-lil",
+  "version": "0.1.0",
+  "description": "Tree-sitter grammar for the lil language",
+  "main": "bindings/node",
+  "keywords": ["tree-sitter", "parser", "lil"],
+  "dependencies": {
+    "nan": "^2.18.0"
+  },
+  "devDependencies": {
+    "tree-sitter-cli": "^0.26.7"
+  }
+}

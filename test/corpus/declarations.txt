@@ -1,0 +1,57 @@
+===
+let declaration
+===
+
+let x = 42
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (integer)))
+
+===
+let with expression
+===
+
+let name = "hello"
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (string)))
+
+===
+assignment
+===
+
+x = 10
+
+---
+
+(source_file
+  (assignment
+    name: (identifier)
+    value: (integer)))
+
+===
+multiple statements
+===
+
+let x = 0
+x = x + 1
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (integer))
+  (assignment
+    name: (identifier)
+    value: (binary_expression
+      left: (identifier)
+      right: (integer))))

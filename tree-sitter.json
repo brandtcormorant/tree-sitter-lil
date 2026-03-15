@@ -1,0 +1,16 @@
+{
+  "grammars": [
+    {
+      "name": "lil",
+      "scope": "source.lil",
+      "path": ".",
+      "file-types": ["lil"]
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "links": {
+      "repository": "https://github.com/brandtcormorant/tree-sitter-cli"
+    }
+  }
+}
