@@ -130,11 +130,16 @@ module.exports = grammar({
 
     parenthesized_expression: ($) => seq("(", $._expression, ")"),
 
+    // --- Labels ---
+
+    label: ($) => seq(":", $.identifier),
+
     // --- Match ---
 
     match_expression: ($) =>
       seq(
         "match",
+        optional(field("label", $.label)),
         field("scrutinee", $._expression),
         "{",
         optional($.match_body),
@@ -220,7 +225,8 @@ module.exports = grammar({
 
     // --- Continue / Return ---
 
-    continue_expression: ($) => prec.right(2, seq("continue", $._expression)),
+    continue_expression: ($) =>
+      prec.right(2, seq("continue", optional(field("label", $.label)), $._expression)),
 
     return_expression: ($) => prec.right(2, seq("return", $._expression)),
 

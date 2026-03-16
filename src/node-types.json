@@ -691,7 +691,18 @@
   {
     "type": "continue_expression",
     "named": true,
-    "fields": {},
+    "fields": {
+      "label": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "label",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": false,
       "required": true,
@@ -1311,6 +1322,21 @@
     }
   },
   {
+    "type": "label",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "let_declaration",
     "named": true,
     "fields": {
@@ -1587,6 +1613,16 @@
     "type": "match_expression",
     "named": true,
     "fields": {
+      "label": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "label",
+            "named": true
+          }
+        ]
+      },
       "scrutinee": {
         "multiple": false,
         "required": true,
