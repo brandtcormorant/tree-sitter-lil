@@ -1,0 +1,88 @@
+===
+enum definition
+===
+
+let Color = enum { red, green, blue }
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (enum_definition
+      (enum_variant
+        name: (identifier))
+      (enum_variant
+        name: (identifier))
+      (enum_variant
+        name: (identifier)))))
+
+===
+enum with explicit values
+===
+
+let Size = enum {
+  small = 2,
+  medium = 4,
+  large = 8,
+}
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (enum_definition
+      (enum_variant
+        name: (identifier)
+        value: (integer))
+      (enum_variant
+        name: (identifier)
+        value: (integer))
+      (enum_variant
+        name: (identifier)
+        value: (integer)))))
+
+===
+enum field access
+===
+
+Size.medium.value
+
+---
+
+(source_file
+  (field_expression
+    object: (field_expression
+      object: (identifier)
+      field: (identifier))
+    field: (identifier)))
+
+===
+enum variant construction
+===
+
+Shape.circle(5)
+
+---
+
+(source_file
+  (call_expression
+    function: (field_expression
+      object: (identifier)
+      field: (identifier))
+    arguments: (argument_list
+      (integer))))
+
+===
+empty enum
+===
+
+let E = enum {}
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (enum_definition)))

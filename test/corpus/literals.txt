@@ -43,17 +43,6 @@ string with escapes
   (string))
 
 ===
-tags
-===
-
-:ok
-
----
-
-(source_file
-  (tag))
-
-===
 true
 ===
 

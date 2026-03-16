@@ -13,12 +13,22 @@ module.exports = grammar({
   rules: {
     source_file: ($) => repeat($._statement),
 
-    _statement: ($) => choice($.let_declaration, $.assignment, $._expression),
+    _statement: ($) =>
+      choice($.let_declaration, $.type_declaration, $.assignment, $._expression),
 
     // --- Declarations ---
 
     let_declaration: ($) =>
-      seq("let", field("name", $.identifier), "=", field("value", $._expression)),
+      seq(
+        "let",
+        field("name", $.identifier),
+        optional(seq(":", field("type", $._type_expression))),
+        "=",
+        field("value", choice($.enum_definition, $._expression)),
+      ),
+
+    type_declaration: ($) =>
+      seq("type", field("name", $.identifier), "=", field("type", $._type_expression)),
 
     assignment: ($) =>
       prec.right(
@@ -135,18 +145,54 @@ module.exports = grammar({
       seq($.match_arm, repeat(seq(",", $.match_arm)), optional(",")),
 
     match_arm: ($) =>
-      seq(field("pattern", $._pattern), "=>", field("body", choice(prec(1, $.block), $._expression))),
+      seq(
+        field("pattern", $._pattern),
+        "=>",
+        field("body", choice(prec(1, $.block), $._expression)),
+      ),
 
     _pattern: ($) =>
       choice(
+        $.enum_variant_pattern,
+        $.variant_pattern,
         $.integer,
         $.float,
         $.string,
-        $.tag,
         $.true,
         $.false,
         $.nil,
         $.identifier,
+      ),
+
+    // Dotted: Color.red or Shape.circle(binding)
+    enum_variant_pattern: ($) =>
+      seq(
+        field("enum", $.identifier),
+        ".",
+        field("variant", $.identifier),
+        optional(seq("(", field("binding", $.identifier), ")")),
+      ),
+
+    // Direct: Value(binding) or Error(binding)
+    variant_pattern: ($) =>
+      seq(field("variant", $.identifier), "(", field("binding", $.identifier), ")"),
+
+    // --- Enums ---
+
+    enum_definition: ($) =>
+      seq(
+        "enum",
+        "{",
+        optional(
+          seq($.enum_variant, repeat(seq(",", $.enum_variant)), optional(",")),
+        ),
+        "}",
+      ),
+
+    enum_variant: ($) =>
+      seq(
+        field("name", $.identifier),
+        optional(seq("=", field("value", $._expression))),
       ),
 
     // --- Functions ---
@@ -157,11 +203,18 @@ module.exports = grammar({
         "(",
         field("parameters", optional($.parameter_list)),
         ")",
+        optional(field("error_marker", "!")),
+        optional(seq("->", field("return_type", $._type_expression))),
         field("body", $.block),
       ),
 
-    parameter_list: ($) =>
-      seq($.identifier, repeat(seq(",", $.identifier))),
+    parameter_list: ($) => seq($.parameter, repeat(seq(",", $.parameter))),
+
+    parameter: ($) =>
+      seq(
+        field("name", $.identifier),
+        optional(seq(":", field("type", $._type_expression))),
+      ),
 
     block: ($) => seq("{", repeat($._statement), "}"),
 
@@ -176,7 +229,9 @@ module.exports = grammar({
     table_literal: ($) =>
       seq(
         "{",
-        optional(seq($.table_field, repeat(seq(",", $.table_field)), optional(","))),
+        optional(
+          seq($.table_field, repeat(seq(",", $.table_field)), optional(",")),
+        ),
         "}",
       ),
 
@@ -192,6 +247,50 @@ module.exports = grammar({
         "]",
       ),
 
+    // --- Type expressions ---
+
+    _type_expression: ($) =>
+      choice(
+        $.optional_type,
+        $.struct_type,
+        $.function_type,
+        $.type_identifier,
+      ),
+
+    type_identifier: ($) => $.identifier,
+
+    optional_type: ($) => seq("?", field("inner", $._type_expression)),
+
+    struct_type: ($) =>
+      seq(
+        "{",
+        optional(
+          seq($.type_field, repeat(seq(",", $.type_field)), optional(",")),
+        ),
+        "}",
+      ),
+
+    type_field: ($) =>
+      seq(field("name", $.identifier), ":", field("type", $._type_expression)),
+
+    function_type: ($) =>
+      prec.right(9, seq(
+        "fn",
+        "(",
+        optional(
+          seq(
+            $._type_expression,
+            repeat(seq(",", $._type_expression)),
+          ),
+        ),
+        ")",
+        optional(choice(
+          seq(field("error_marker", "!"), "->", field("return_type", $._type_expression)),
+          seq(field("error_marker", "!")),
+          seq("->", field("return_type", $._type_expression)),
+        )),
+      )),
+
     // --- Primaries ---
 
     _primary: ($) =>
@@ -199,7 +298,6 @@ module.exports = grammar({
         $.integer,
         $.float,
         $.string,
-        $.tag,
         $.true,
         $.false,
         $.nil,
@@ -211,8 +309,6 @@ module.exports = grammar({
     float: (_) => /\d+\.\d+/,
 
     string: (_) => seq('"', repeat(choice(/[^"\\]+/, /\\./)), '"'),
-
-    tag: (_) => /:[a-zA-Z_][a-zA-Z0-9_]*/,
 
     true: (_) => "true",
     false: (_) => "false",

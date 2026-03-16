@@ -38,6 +38,21 @@ x = 10
     value: (integer)))
 
 ===
+let with type annotation
+===
+
+let x: number = 42
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    type: (type_identifier
+      (identifier))
+    value: (integer)))
+
+===
 multiple statements
 ===
 

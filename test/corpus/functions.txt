@@ -11,7 +11,8 @@ let square = fn(x) { return x * x }
     name: (identifier)
     value: (function_definition
       parameters: (parameter_list
-        (identifier))
+        (parameter
+          name: (identifier)))
       body: (block
         (return_expression
           (binary_expression
@@ -31,8 +32,10 @@ let add = fn(a, b) { return a + b }
     name: (identifier)
     value: (function_definition
       parameters: (parameter_list
-        (identifier)
-        (identifier))
+        (parameter
+          name: (identifier))
+        (parameter
+          name: (identifier)))
       body: (block
         (return_expression
           (binary_expression
@@ -126,12 +129,14 @@ let make_adder = fn(n) {
     name: (identifier)
     value: (function_definition
       parameters: (parameter_list
-        (identifier))
+        (parameter
+          name: (identifier)))
       body: (block
         (return_expression
           (function_definition
             parameters: (parameter_list
-              (identifier))
+              (parameter
+                name: (identifier)))
             body: (block
               (return_expression
                 (binary_expression
@@ -151,8 +156,113 @@ let double = fn(n) { n * 2 }
     name: (identifier)
     value: (function_definition
       parameters: (parameter_list
-        (identifier))
+        (parameter
+          name: (identifier)))
       body: (block
         (binary_expression
           left: (identifier)
           right: (integer))))))
+
+===
+function with typed parameters
+===
+
+let add = fn(a: number, b: number) { return a + b }
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (function_definition
+      parameters: (parameter_list
+        (parameter
+          name: (identifier)
+          type: (type_identifier
+            (identifier)))
+        (parameter
+          name: (identifier)
+          type: (type_identifier
+            (identifier))))
+      body: (block
+        (return_expression
+          (binary_expression
+            left: (identifier)
+            right: (identifier)))))))
+
+===
+function with return type
+===
+
+let add = fn(a, b) -> number { return a + b }
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (function_definition
+      parameters: (parameter_list
+        (parameter
+          name: (identifier))
+        (parameter
+          name: (identifier)))
+      return_type: (type_identifier
+        (identifier))
+      body: (block
+        (return_expression
+          (binary_expression
+            left: (identifier)
+            right: (identifier)))))))
+
+===
+function with error marker
+===
+
+let safe_div = fn(a, b)! { return a / b }
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (function_definition
+      parameters: (parameter_list
+        (parameter
+          name: (identifier))
+        (parameter
+          name: (identifier)))
+      body: (block
+        (return_expression
+          (binary_expression
+            left: (identifier)
+            right: (identifier)))))))
+
+===
+function with error marker and return type
+===
+
+let safe_div = fn(a: number, b: number)! -> number { return a / b }
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (function_definition
+      parameters: (parameter_list
+        (parameter
+          name: (identifier)
+          type: (type_identifier
+            (identifier)))
+        (parameter
+          name: (identifier)
+          type: (type_identifier
+            (identifier))))
+      return_type: (type_identifier
+        (identifier))
+      body: (block
+        (return_expression
+          (binary_expression
+            left: (identifier)
+            right: (identifier)))))))

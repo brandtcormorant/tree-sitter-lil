@@ -1,34 +1,4 @@
 ===
-match with tag patterns
-===
-
-match status {
-  :ok => 200,
-  :not_found => 404,
-  :error => 500,
-  _ => 0
-}
-
----
-
-(source_file
-  (match_expression
-    scrutinee: (identifier)
-    (match_body
-      (match_arm
-        pattern: (tag)
-        body: (integer))
-      (match_arm
-        pattern: (tag)
-        body: (integer))
-      (match_arm
-        pattern: (tag)
-        body: (integer))
-      (match_arm
-        pattern: (identifier)
-        body: (integer)))))
-
-===
 match with boolean scrutinee
 ===
 
@@ -91,7 +61,7 @@ match with continue
 ===
 
 match 10 {
-  0 => :done,
+  0 => "done",
   n => continue n - 1
 }
 
@@ -103,7 +73,7 @@ match 10 {
     (match_body
       (match_arm
         pattern: (integer)
-        body: (tag))
+        body: (string))
       (match_arm
         pattern: (identifier)
         body: (continue_expression
@@ -139,12 +109,12 @@ deeply nested match
 match 1 {
   1 => match 2 {
     2 => match 3 {
-      3 => :found,
-      _ => :nope
+      3 => "found",
+      _ => "nope"
     },
-    _ => :nope
+    _ => "nope"
   },
-  _ => :nope
+  _ => "nope"
 }
 
 ---
@@ -165,23 +135,23 @@ match 1 {
                 (match_body
                   (match_arm
                     pattern: (integer)
-                    body: (tag))
+                    body: (string))
                   (match_arm
                     pattern: (identifier)
-                    body: (tag)))))
+                    body: (string)))))
             (match_arm
               pattern: (identifier)
-              body: (tag)))))
+              body: (string)))))
       (match_arm
         pattern: (identifier)
-        body: (tag)))))
+        body: (string)))))
 
 ===
 match with integer pattern
 ===
 
 match n % 15 {
-  0 => :fizzbuzz,
+  0 => "fizzbuzz",
   _ => n
 }
 
@@ -195,7 +165,7 @@ match n % 15 {
     (match_body
       (match_arm
         pattern: (integer)
-        body: (tag))
+        body: (string))
       (match_arm
         pattern: (identifier)
         body: (identifier)))))
@@ -225,3 +195,124 @@ let bigger = match a > b {
         (match_arm
           pattern: (identifier)
           body: (identifier))))))
+
+===
+match with enum variant pattern
+===
+
+match light {
+  Color.red => "stop",
+  Color.green => "go",
+  _ => "unknown"
+}
+
+---
+
+(source_file
+  (match_expression
+    scrutinee: (identifier)
+    (match_body
+      (match_arm
+        pattern: (enum_variant_pattern
+          enum: (identifier)
+          variant: (identifier))
+        body: (string))
+      (match_arm
+        pattern: (enum_variant_pattern
+          enum: (identifier)
+          variant: (identifier))
+        body: (string))
+      (match_arm
+        pattern: (identifier)
+        body: (string)))))
+
+===
+match with enum variant payload
+===
+
+match shape {
+  Shape.circle(r) => r,
+  Shape.rect(dims) => dims,
+  _ => nil
+}
+
+---
+
+(source_file
+  (match_expression
+    scrutinee: (identifier)
+    (match_body
+      (match_arm
+        pattern: (enum_variant_pattern
+          enum: (identifier)
+          variant: (identifier)
+          binding: (identifier))
+        body: (identifier))
+      (match_arm
+        pattern: (enum_variant_pattern
+          enum: (identifier)
+          variant: (identifier)
+          binding: (identifier))
+        body: (identifier))
+      (match_arm
+        pattern: (identifier)
+        body: (nil)))))
+
+===
+match with direct variant pattern
+===
+
+match run(1) {
+  Value(v) => v,
+  Error(e) => e,
+  _ => nil
+}
+
+---
+
+(source_file
+  (match_expression
+    scrutinee: (call_expression
+      function: (identifier)
+      arguments: (argument_list
+        (integer)))
+    (match_body
+      (match_arm
+        pattern: (variant_pattern
+          variant: (identifier)
+          binding: (identifier))
+        body: (identifier))
+      (match_arm
+        pattern: (variant_pattern
+          variant: (identifier)
+          binding: (identifier))
+        body: (identifier))
+      (match_arm
+        pattern: (identifier)
+        body: (nil)))))
+
+===
+match with string pattern
+===
+
+match name {
+  "alice" => 1,
+  "bob" => 2,
+  _ => 0
+}
+
+---
+
+(source_file
+  (match_expression
+    scrutinee: (identifier)
+    (match_body
+      (match_arm
+        pattern: (string)
+        body: (integer))
+      (match_arm
+        pattern: (string)
+        body: (integer))
+      (match_arm
+        pattern: (identifier)
+        body: (integer)))))

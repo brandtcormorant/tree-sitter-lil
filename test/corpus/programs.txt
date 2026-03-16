@@ -107,7 +107,8 @@ export({
           key: (identifier)
           value: (function_definition
             parameters: (parameter_list
-              (identifier))
+              (parameter
+                name: (identifier)))
             body: (block
               (return_expression
                 (binary_expression
@@ -117,7 +118,8 @@ export({
           key: (identifier)
           value: (function_definition
             parameters: (parameter_list
-              (identifier))
+              (parameter
+                name: (identifier)))
             body: (block
               (return_expression
                 (binary_expression
@@ -127,8 +129,10 @@ export({
           key: (identifier)
           value: (function_definition
             parameters: (parameter_list
-              (identifier)
-              (identifier))
+              (parameter
+                name: (identifier))
+              (parameter
+                name: (identifier)))
             body: (block
               (return_expression
                 (binary_expression
@@ -139,10 +143,10 @@ export({
           value: (integer))))))
 
 ===
-print with mixed arguments
+print with arguments
 ===
 
-print(:ok, 42, true)
+print("ok", 42, true)
 
 ---
 
@@ -150,7 +154,7 @@ print(:ok, 42, true)
   (call_expression
     function: (identifier)
     arguments: (argument_list
-      (tag)
+      (string)
       (integer)
       (true))))
 

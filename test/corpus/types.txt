@@ -1,0 +1,148 @@
+===
+let with type annotation
+===
+
+let x: number = 5
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    type: (type_identifier
+      (identifier))
+    value: (integer)))
+
+===
+let with string type
+===
+
+let name: string = "hello"
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    type: (type_identifier
+      (identifier))
+    value: (string)))
+
+===
+let with optional type
+===
+
+let y: ?number = nil
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    type: (optional_type
+      inner: (type_identifier
+        (identifier)))
+    value: (nil)))
+
+===
+type declaration with struct type
+===
+
+type Point = { x: number, y: number }
+
+---
+
+(source_file
+  (type_declaration
+    name: (identifier)
+    type: (struct_type
+      (type_field
+        name: (identifier)
+        type: (type_identifier
+          (identifier)))
+      (type_field
+        name: (identifier)
+        type: (type_identifier
+          (identifier))))))
+
+===
+type declaration with function type
+===
+
+type Handler = fn(string)! -> number
+
+---
+
+(source_file
+  (type_declaration
+    name: (identifier)
+    type: (function_type
+      (type_identifier
+        (identifier))
+      return_type: (type_identifier
+        (identifier)))))
+
+===
+type declaration with simple type
+===
+
+type Name = string
+
+---
+
+(source_file
+  (type_declaration
+    name: (identifier)
+    type: (type_identifier
+      (identifier))))
+
+===
+function type with no params
+===
+
+type Callback = fn() -> bool
+
+---
+
+(source_file
+  (type_declaration
+    name: (identifier)
+    type: (function_type
+      return_type: (type_identifier
+        (identifier)))))
+
+===
+function type with multiple params
+===
+
+type BinOp = fn(number, number) -> number
+
+---
+
+(source_file
+  (type_declaration
+    name: (identifier)
+    type: (function_type
+      (type_identifier
+        (identifier))
+      (type_identifier
+        (identifier))
+      return_type: (type_identifier
+        (identifier)))))
+
+===
+nested optional type
+===
+
+let x: ??number = nil
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    type: (optional_type
+      inner: (optional_type
+        inner: (type_identifier
+          (identifier))))
+    value: (nil)))
