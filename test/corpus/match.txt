@@ -2,9 +2,9 @@
 match with boolean scrutinee
 ===
 
-match a > b {
-  true => a,
-  _ => b
+match (a > b) {
+  true { a }
+  _ { b }
 }
 
 ---
@@ -17,18 +17,20 @@ match a > b {
     (match_body
       (match_arm
         pattern: (true)
-        body: (identifier))
+        body: (block
+          (identifier)))
       (match_arm
         pattern: (identifier)
-        body: (identifier)))))
+        body: (block
+          (identifier))))))
 
 ===
 match with block body
 ===
 
-match 10 {
-  0 => acc,
-  n => {
+match (10) {
+  0 { acc }
+  n {
     acc = acc + n
     continue n - 1
   }
@@ -42,7 +44,8 @@ match 10 {
     (match_body
       (match_arm
         pattern: (integer)
-        body: (identifier))
+        body: (block
+          (identifier)))
       (match_arm
         pattern: (identifier)
         body: (block
@@ -60,9 +63,9 @@ match 10 {
 match with continue
 ===
 
-match 10 {
-  0 => "done",
-  n => continue n - 1
+match (10) {
+  0 { "done" }
+  n { continue n - 1 }
 }
 
 ---
@@ -73,19 +76,21 @@ match 10 {
     (match_body
       (match_arm
         pattern: (integer)
-        body: (string))
+        body: (block
+          (string)))
       (match_arm
         pattern: (identifier)
-        body: (continue_expression
-          (binary_expression
-            left: (identifier)
-            right: (integer)))))))
+        body: (block
+          (continue_expression
+            (binary_expression
+              left: (identifier)
+              right: (integer))))))))
 
 ===
 nested match
 ===
 
-match 1 { _ => match 0 { 0 => 100 } }
+match (1) { _ { match (0) { 0 { 100 } } } }
 
 ---
 
@@ -95,26 +100,28 @@ match 1 { _ => match 0 { 0 => 100 } }
     (match_body
       (match_arm
         pattern: (identifier)
-        body: (match_expression
-          scrutinee: (integer)
-          (match_body
-            (match_arm
-              pattern: (integer)
-              body: (integer))))))))
+        body: (block
+          (match_expression
+            scrutinee: (integer)
+            (match_body
+              (match_arm
+                pattern: (integer)
+                body: (block
+                  (integer))))))))))
 
 ===
 deeply nested match
 ===
 
-match 1 {
-  1 => match 2 {
-    2 => match 3 {
-      3 => "found",
-      _ => "nope"
-    },
-    _ => "nope"
-  },
-  _ => "nope"
+match (1) {
+  1 { match (2) {
+    2 { match (3) {
+      3 { "found" }
+      _ { "nope" }
+    } }
+    _ { "nope" }
+  } }
+  _ { "nope" }
 }
 
 ---
@@ -125,34 +132,40 @@ match 1 {
     (match_body
       (match_arm
         pattern: (integer)
-        body: (match_expression
-          scrutinee: (integer)
-          (match_body
-            (match_arm
-              pattern: (integer)
-              body: (match_expression
-                scrutinee: (integer)
-                (match_body
-                  (match_arm
-                    pattern: (integer)
-                    body: (string))
-                  (match_arm
-                    pattern: (identifier)
-                    body: (string)))))
-            (match_arm
-              pattern: (identifier)
-              body: (string)))))
+        body: (block
+          (match_expression
+            scrutinee: (integer)
+            (match_body
+              (match_arm
+                pattern: (integer)
+                body: (block
+                  (match_expression
+                    scrutinee: (integer)
+                    (match_body
+                      (match_arm
+                        pattern: (integer)
+                        body: (block
+                          (string)))
+                      (match_arm
+                        pattern: (identifier)
+                        body: (block
+                          (string)))))))
+              (match_arm
+                pattern: (identifier)
+                body: (block
+                  (string)))))))
       (match_arm
         pattern: (identifier)
-        body: (string)))))
+        body: (block
+          (string))))))
 
 ===
 match with integer pattern
 ===
 
-match n % 15 {
-  0 => "fizzbuzz",
-  _ => n
+match (n % 15) {
+  0 { "fizzbuzz" }
+  _ { n }
 }
 
 ---
@@ -165,18 +178,20 @@ match n % 15 {
     (match_body
       (match_arm
         pattern: (integer)
-        body: (string))
+        body: (block
+          (string)))
       (match_arm
         pattern: (identifier)
-        body: (identifier)))))
+        body: (block
+          (identifier))))))
 
 ===
 let binding from match
 ===
 
-let bigger = match a > b {
-  true => a,
-  _ => b
+let bigger = match (a > b) {
+  true { a }
+  _ { b }
 }
 
 ---
@@ -191,19 +206,21 @@ let bigger = match a > b {
       (match_body
         (match_arm
           pattern: (true)
-          body: (identifier))
+          body: (block
+            (identifier)))
         (match_arm
           pattern: (identifier)
-          body: (identifier))))))
+          body: (block
+            (identifier)))))))
 
 ===
 match with enum variant pattern
 ===
 
-match light {
-  Color.red => "stop",
-  Color.green => "go",
-  _ => "unknown"
+match (light) {
+  Color.red { "stop" }
+  Color.green { "go" }
+  _ { "unknown" }
 }
 
 ---
@@ -216,24 +233,27 @@ match light {
         pattern: (enum_variant_pattern
           enum: (identifier)
           variant: (identifier))
-        body: (string))
+        body: (block
+          (string)))
       (match_arm
         pattern: (enum_variant_pattern
           enum: (identifier)
           variant: (identifier))
-        body: (string))
+        body: (block
+          (string)))
       (match_arm
         pattern: (identifier)
-        body: (string)))))
+        body: (block
+          (string))))))
 
 ===
 match with enum variant payload
 ===
 
-match shape {
-  Shape.circle(r) => r,
-  Shape.rect(dims) => dims,
-  _ => nil
+match (shape) {
+  Shape.circle(r) { r }
+  Shape.rect(dims) { dims }
+  _ { nil }
 }
 
 ---
@@ -247,25 +267,28 @@ match shape {
           enum: (identifier)
           variant: (identifier)
           binding: (identifier))
-        body: (identifier))
+        body: (block
+          (identifier)))
       (match_arm
         pattern: (enum_variant_pattern
           enum: (identifier)
           variant: (identifier)
           binding: (identifier))
-        body: (identifier))
+        body: (block
+          (identifier)))
       (match_arm
         pattern: (identifier)
-        body: (nil)))))
+        body: (block
+          (nil))))))
 
 ===
 match with direct variant pattern
 ===
 
-match run(1) {
-  Value(v) => v,
-  Error(e) => e,
-  _ => nil
+match (run(1)) {
+  Value(v) { v }
+  Error(e) { e }
+  _ { nil }
 }
 
 ---
@@ -281,24 +304,27 @@ match run(1) {
         pattern: (variant_pattern
           variant: (identifier)
           binding: (identifier))
-        body: (identifier))
+        body: (block
+          (identifier)))
       (match_arm
         pattern: (variant_pattern
           variant: (identifier)
           binding: (identifier))
-        body: (identifier))
+        body: (block
+          (identifier)))
       (match_arm
         pattern: (identifier)
-        body: (nil)))))
+        body: (block
+          (nil))))))
 
 ===
 match with string pattern
 ===
 
-match name {
-  "alice" => 1,
-  "bob" => 2,
-  _ => 0
+match (name) {
+  "alice" { 1 }
+  "bob" { 2 }
+  _ { 0 }
 }
 
 ---
@@ -309,30 +335,33 @@ match name {
     (match_body
       (match_arm
         pattern: (string)
-        body: (integer))
+        body: (block
+          (integer)))
       (match_arm
         pattern: (string)
-        body: (integer))
+        body: (block
+          (integer)))
       (match_arm
         pattern: (identifier)
-        body: (integer)))))
+        body: (block
+          (integer))))))
 
 ===
 labeled match with labeled continue
 ===
 
-match :outer y < 3 {
-  true => {
-    match :inner x < 3 {
-      true => {
+match :outer (y < 3) {
+  true {
+    match :inner (x < 3) {
+      true {
         x = x + 1
         continue :inner x < 3
-      },
-      _ => nil
+      }
+      _ { nil }
     }
     continue :outer y < 3
-  },
-  _ => nil
+  }
+  _ { nil }
 }
 
 ---
@@ -371,7 +400,8 @@ match :outer y < 3 {
                       right: (integer)))))
               (match_arm
                 pattern: (identifier)
-                body: (nil))))
+                body: (block
+                  (nil)))))
           (continue_expression
             label: (label
               (identifier))
@@ -380,4 +410,5 @@ match :outer y < 3 {
               right: (integer)))))
       (match_arm
         pattern: (identifier)
-        body: (nil)))))
+        body: (block
+          (nil))))))

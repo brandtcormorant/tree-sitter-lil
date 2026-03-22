@@ -4,9 +4,9 @@ fibonacci
 
 let a = 0
 let b = 1
-match 10 {
-  0 => a,
-  n => {
+match (10) {
+  0 { a }
+  n {
     let temp = a + b
     a = b
     b = temp
@@ -28,7 +28,8 @@ match 10 {
     (match_body
       (match_arm
         pattern: (integer)
-        body: (identifier))
+        body: (block
+          (identifier)))
       (match_arm
         pattern: (identifier)
         body: (block
@@ -53,7 +54,7 @@ closure counter
 ===
 
 let x = 0
-let inc = fn() {
+let inc = function() {
   x = x + 1
   return x
 }
@@ -90,9 +91,9 @@ export table of functions
 ===
 
 export({
-  double: fn(x) { return x * 2 },
-  square: fn(x) { return x * x },
-  add: fn(a, b) { return a + b },
+  double: function(x) { return x * 2 },
+  square: function(x) { return x * x },
+  add: function(a, b) { return a + b },
   answer: 42
 })
 
@@ -164,12 +165,12 @@ gcd via nested match and continue
 
 let a = 12
 let b = 8
-match a == b {
-  true => a,
-  _ => {
-    match a > b {
-      true => { a = a - b },
-      _ => { b = b - a }
+match (a == b) {
+  true { a }
+  _ {
+    match (a > b) {
+      true { a = a - b }
+      _ { b = b - a }
     }
     continue a == b
   }
@@ -191,7 +192,8 @@ match a == b {
     (match_body
       (match_arm
         pattern: (true)
-        body: (identifier))
+        body: (block
+          (identifier)))
       (match_arm
         pattern: (identifier)
         body: (block

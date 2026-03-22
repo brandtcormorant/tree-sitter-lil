@@ -2,7 +2,7 @@
 function definition
 ===
 
-let square = fn(x) { return x * x }
+let square = function(x) { return x * x }
 
 ---
 
@@ -23,7 +23,7 @@ let square = fn(x) { return x * x }
 function with multiple parameters
 ===
 
-let add = fn(a, b) { return a + b }
+let add = function(a, b) { return a + b }
 
 ---
 
@@ -46,7 +46,7 @@ let add = fn(a, b) { return a + b }
 function with no parameters
 ===
 
-let f = fn() { return x }
+let f = function() { return x }
 
 ---
 
@@ -118,8 +118,8 @@ apply(double, 15)
 nested closure
 ===
 
-let make_adder = fn(n) {
-  return fn(x) { return x + n }
+let make_adder = function(n) {
+  return function(x) { return x + n }
 }
 
 ---
@@ -147,7 +147,7 @@ let make_adder = fn(n) {
 implicit return in function body
 ===
 
-let double = fn(n) { n * 2 }
+let double = function(n) { n * 2 }
 
 ---
 
@@ -167,7 +167,7 @@ let double = fn(n) { n * 2 }
 function with typed parameters
 ===
 
-let add = fn(a: number, b: number) { return a + b }
+let add = function(a: number, b: number) { return a + b }
 
 ---
 
@@ -194,7 +194,7 @@ let add = fn(a: number, b: number) { return a + b }
 function with return type
 ===
 
-let add = fn(a, b) -> number { return a + b }
+let add = function(a, b) -> number { return a + b }
 
 ---
 
@@ -219,7 +219,7 @@ let add = fn(a, b) -> number { return a + b }
 function with error marker
 ===
 
-let safe_div = fn(a, b)! { return a / b }
+let safe_div = function(a, b)! { return a / b }
 
 ---
 
@@ -242,7 +242,7 @@ let safe_div = fn(a, b)! { return a / b }
 function with error marker and return type
 ===
 
-let safe_div = fn(a: number, b: number)! -> number { return a / b }
+let safe_div = function(a: number, b: number)! -> number { return a / b }
 
 ---
 

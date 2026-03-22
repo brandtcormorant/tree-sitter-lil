@@ -4,6 +4,11 @@
   "description": "Tree-sitter grammar for the lil language",
   "main": "bindings/node",
   "keywords": ["tree-sitter", "parser", "lil"],
+  "scripts": {
+    "generate": "tree-sitter generate",
+    "test": "tree-sitter generate && tree-sitter test",
+    "parse": "tree-sitter parse"
+  },
   "dependencies": {
     "nan": "^2.18.0"
   },

@@ -37,7 +37,7 @@ table with functions
 ===
 
 {
-  double: fn(x) { return x * 2 },
+  double: function(x) { return x * 2 },
   answer: 42
 }
 

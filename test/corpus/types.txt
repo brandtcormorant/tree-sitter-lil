@@ -69,7 +69,7 @@ type Point = { x: number, y: number }
 type declaration with function type
 ===
 
-type Handler = fn(string)! -> number
+type Handler = function(string)! -> number
 
 ---
 
@@ -100,7 +100,7 @@ type Name = string
 function type with no params
 ===
 
-type Callback = fn() -> bool
+type Callback = function() -> bool
 
 ---
 
@@ -115,7 +115,7 @@ type Callback = fn() -> bool
 function type with multiple params
 ===
 
-type BinOp = fn(number, number) -> number
+type BinOp = function(number, number) -> number
 
 ---
 
