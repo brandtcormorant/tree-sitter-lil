@@ -16,8 +16,6 @@ module.exports = grammar({
     _statement: ($) =>
       choice($.let_declaration, $.type_declaration, $.assignment, $._expression),
 
-    // --- Declarations ---
-
     let_declaration: ($) =>
       seq(
         "let",
@@ -35,8 +33,6 @@ module.exports = grammar({
         1,
         seq(field("name", $.identifier), "=", field("value", $._expression)),
       ),
-
-    // --- Expressions ---
 
     _expression: ($) =>
       choice(
@@ -140,20 +136,20 @@ module.exports = grammar({
       seq(
         "match",
         optional(field("label", $.label)),
+        "(",
         field("scrutinee", $._expression),
+        ")",
         "{",
         optional($.match_body),
         "}",
       ),
 
-    match_body: ($) =>
-      seq($.match_arm, repeat(seq(",", $.match_arm)), optional(",")),
+    match_body: ($) => repeat1($.match_arm),
 
     match_arm: ($) =>
       seq(
         field("pattern", $._pattern),
-        "=>",
-        field("body", choice(prec(1, $.block), $._expression)),
+        field("body", $.block),
       ),
 
     _pattern: ($) =>
@@ -204,7 +200,7 @@ module.exports = grammar({
 
     function_definition: ($) =>
       seq(
-        "fn",
+        "function",
         "(",
         field("parameters", optional($.parameter_list)),
         ")",
@@ -281,7 +277,7 @@ module.exports = grammar({
 
     function_type: ($) =>
       prec.right(9, seq(
-        "fn",
+        "function",
         "(",
         optional(
           seq(

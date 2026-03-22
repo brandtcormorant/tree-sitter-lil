@@ -793,12 +793,20 @@
           ]
         },
         {
+          "type": "STRING",
+          "value": "("
+        },
+        {
           "type": "FIELD",
           "name": "scrutinee",
           "content": {
             "type": "SYMBOL",
             "name": "_expression"
           }
+        },
+        {
+          "type": "STRING",
+          "value": ")"
         },
         {
           "type": "STRING",
@@ -823,41 +831,11 @@
       ]
     },
     "match_body": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "match_arm"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "STRING",
-                "value": ","
-              },
-              {
-                "type": "SYMBOL",
-                "name": "match_arm"
-              }
-            ]
-          }
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "STRING",
-              "value": ","
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        }
-      ]
+      "type": "REPEAT1",
+      "content": {
+        "type": "SYMBOL",
+        "name": "match_arm"
+      }
     },
     "match_arm": {
       "type": "SEQ",
@@ -871,28 +849,11 @@
           }
         },
         {
-          "type": "STRING",
-          "value": "=>"
-        },
-        {
           "type": "FIELD",
           "name": "body",
           "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "PREC",
-                "value": 1,
-                "content": {
-                  "type": "SYMBOL",
-                  "name": "block"
-                }
-              },
-              {
-                "type": "SYMBOL",
-                "name": "_expression"
-              }
-            ]
+            "type": "SYMBOL",
+            "name": "block"
           }
         }
       ]
@@ -1126,7 +1087,7 @@
       "members": [
         {
           "type": "STRING",
-          "value": "fn"
+          "value": "function"
         },
         {
           "type": "STRING",
@@ -1610,7 +1571,7 @@
         "members": [
           {
             "type": "STRING",
-            "value": "fn"
+            "value": "function"
           },
           {
             "type": "STRING",

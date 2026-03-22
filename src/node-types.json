@@ -1469,83 +1469,7 @@
         "required": true,
         "types": [
           {
-            "type": "array_literal",
-            "named": true
-          },
-          {
-            "type": "binary_expression",
-            "named": true
-          },
-          {
             "type": "block",
-            "named": true
-          },
-          {
-            "type": "call_expression",
-            "named": true
-          },
-          {
-            "type": "continue_expression",
-            "named": true
-          },
-          {
-            "type": "false",
-            "named": true
-          },
-          {
-            "type": "field_expression",
-            "named": true
-          },
-          {
-            "type": "float",
-            "named": true
-          },
-          {
-            "type": "function_definition",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "index_expression",
-            "named": true
-          },
-          {
-            "type": "integer",
-            "named": true
-          },
-          {
-            "type": "match_expression",
-            "named": true
-          },
-          {
-            "type": "nil",
-            "named": true
-          },
-          {
-            "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "return_expression",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "table_literal",
-            "named": true
-          },
-          {
-            "type": "true",
-            "named": true
-          },
-          {
-            "type": "unary_expression",
             "named": true
           }
         ]
@@ -2497,10 +2421,6 @@
     "named": false
   },
   {
-    "type": "=>",
-    "named": false
-  },
-  {
     "type": ">",
     "named": false
   },
@@ -2542,7 +2462,7 @@
     "named": true
   },
   {
-    "type": "fn",
+    "type": "function",
     "named": false
   },
   {
