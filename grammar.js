@@ -14,7 +14,18 @@ module.exports = grammar({
     source_file: ($) => repeat($._statement),
 
     _statement: ($) =>
-      choice($.let_declaration, $.type_declaration, $.assignment, $._expression),
+      choice(
+        $.let_declaration,
+        $.type_declaration,
+        $.assignment,
+        $.index_assignment,
+        $.field_assignment,
+        $.while_statement,
+        $.if_expression,
+        $._expression,
+      ),
+
+    // --- Declarations ---
 
     let_declaration: ($) =>
       seq(
@@ -33,6 +44,56 @@ module.exports = grammar({
         1,
         seq(field("name", $.identifier), "=", field("value", $._expression)),
       ),
+
+    index_assignment: ($) =>
+      prec.right(
+        1,
+        seq(
+          field("object", $._expression),
+          "[",
+          field("index", $._expression),
+          "]",
+          "=",
+          field("value", $._expression),
+        ),
+      ),
+
+    field_assignment: ($) =>
+      prec.right(
+        1,
+        seq(
+          field("object", $._expression),
+          ".",
+          field("field", $.identifier),
+          "=",
+          field("value", $._expression),
+        ),
+      ),
+
+    // --- While / If ---
+
+    while_statement: ($) =>
+      seq(
+        "while",
+        "(",
+        field("condition", $._expression),
+        ")",
+        field("body", $.block),
+      ),
+
+    if_expression: ($) =>
+      prec.right(
+        seq(
+          "if",
+          "(",
+          field("condition", $._expression),
+          ")",
+          field("consequence", $.block),
+          optional(seq("else", field("alternative", choice($.if_expression, $.block)))),
+        ),
+      ),
+
+    // --- Expressions ---
 
     _expression: ($) =>
       choice(
@@ -56,6 +117,8 @@ module.exports = grammar({
     binary_expression: ($) =>
       choice(
         ...[
+          ["or", 1],
+          ["and", 2],
           ["==", 3],
           ["!=", 3],
           ["<", 4],

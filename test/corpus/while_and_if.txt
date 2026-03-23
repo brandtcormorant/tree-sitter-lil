@@ -1,0 +1,184 @@
+==================
+while loop
+==================
+
+while (x < 10) {
+    x = x + 1
+}
+
+---
+
+(source_file
+  (while_statement
+    condition: (binary_expression
+      left: (identifier)
+      right: (integer))
+    body: (block
+      (assignment
+        name: (identifier)
+        value: (binary_expression
+          left: (identifier)
+          right: (integer))))))
+
+==================
+if statement
+==================
+
+if (x > 0) {
+    print(x)
+}
+
+---
+
+(source_file
+  (if_expression
+    condition: (binary_expression
+      left: (identifier)
+      right: (integer))
+    consequence: (block
+      (call_expression
+        function: (identifier)
+        arguments: (argument_list
+          (identifier))))))
+
+==================
+if else
+==================
+
+if (x > 0) {
+    print("positive")
+} else {
+    print("non-positive")
+}
+
+---
+
+(source_file
+  (if_expression
+    condition: (binary_expression
+      left: (identifier)
+      right: (integer))
+    consequence: (block
+      (call_expression
+        function: (identifier)
+        arguments: (argument_list
+          (string))))
+    alternative: (block
+      (call_expression
+        function: (identifier)
+        arguments: (argument_list
+          (string))))))
+
+==================
+else if chain
+==================
+
+if (x > 0) {
+    print("positive")
+} else if (x == 0) {
+    print("zero")
+} else {
+    print("negative")
+}
+
+---
+
+(source_file
+  (if_expression
+    condition: (binary_expression
+      left: (identifier)
+      right: (integer))
+    consequence: (block
+      (call_expression
+        function: (identifier)
+        arguments: (argument_list
+          (string))))
+    alternative: (if_expression
+      condition: (binary_expression
+        left: (identifier)
+        right: (integer))
+      consequence: (block
+        (call_expression
+          function: (identifier)
+          arguments: (argument_list
+            (string))))
+      alternative: (block
+        (call_expression
+          function: (identifier)
+          arguments: (argument_list
+            (string)))))))
+
+==================
+and operator
+==================
+
+let x = true and false
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (binary_expression
+      left: (true)
+      right: (false))))
+
+==================
+or operator
+==================
+
+let x = false or true
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (binary_expression
+      left: (false)
+      right: (true))))
+
+==================
+and/or precedence
+==================
+
+let x = a or b and c
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (binary_expression
+      left: (identifier)
+      right: (binary_expression
+        left: (identifier)
+        right: (identifier)))))
+
+==================
+index assignment
+==================
+
+a[0] = 42
+
+---
+
+(source_file
+  (index_assignment
+    object: (identifier)
+    index: (integer)
+    value: (integer)))
+
+==================
+field assignment
+==================
+
+point.x = 10
+
+---
+
+(source_file
+  (field_assignment
+    object: (identifier)
+    field: (identifier)
+    value: (integer)))
