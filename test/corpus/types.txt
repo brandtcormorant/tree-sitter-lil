@@ -2,7 +2,7 @@
 let with type annotation
 ===
 
-let x: number = 5
+let x: Number = 5
 
 ---
 
@@ -17,7 +17,7 @@ let x: number = 5
 let with string type
 ===
 
-let name: string = "hello"
+let name: String = "hello"
 
 ---
 
@@ -32,7 +32,7 @@ let name: string = "hello"
 let with optional type
 ===
 
-let y: ?number = nil
+let y: ?Number = nil
 
 ---
 
@@ -48,7 +48,7 @@ let y: ?number = nil
 type declaration with struct type
 ===
 
-type Point = { x: number, y: number }
+type Point = { x: Number, y: Number }
 
 ---
 
@@ -69,7 +69,7 @@ type Point = { x: number, y: number }
 type declaration with function type
 ===
 
-type Handler = function(string)! -> number
+type Handler = function(String)! -> Number
 
 ---
 
@@ -86,7 +86,7 @@ type Handler = function(string)! -> number
 type declaration with simple type
 ===
 
-type Name = string
+type Name = String
 
 ---
 
@@ -100,7 +100,7 @@ type Name = string
 function type with no params
 ===
 
-type Callback = function() -> bool
+type Callback = function() -> Boolean
 
 ---
 
@@ -115,7 +115,7 @@ type Callback = function() -> bool
 function type with multiple params
 ===
 
-type BinOp = function(number, number) -> number
+type BinOp = function(Number, Number) -> Number
 
 ---
 
@@ -134,7 +134,7 @@ type BinOp = function(number, number) -> number
 nested optional type
 ===
 
-let x: ??number = nil
+let x: ??Number = nil
 
 ---
 
