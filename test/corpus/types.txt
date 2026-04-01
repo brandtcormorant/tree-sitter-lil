@@ -45,90 +45,117 @@ let y: ?Number = nil
     value: (nil)))
 
 ===
-type declaration with struct type
+struct definition
 ===
 
-type Point = { x: Number, y: Number }
+let Point = struct { x: Number, y: Number }
 
 ---
 
 (source_file
-  (type_declaration
+  (let_declaration
     name: (identifier)
-    type: (struct_type
-      (type_field
+    value: (struct_definition
+      (struct_member
         name: (identifier)
         type: (type_identifier
           (identifier)))
-      (type_field
+      (struct_member
         name: (identifier)
         type: (type_identifier
           (identifier))))))
 
 ===
-type declaration with function type
+struct with method
 ===
 
-type Handler = function(String)! -> Number
+let Point = struct {
+    x: Number,
+    get_x = function(self: Point) { return self.x },
+}
 
 ---
 
 (source_file
-  (type_declaration
+  (let_declaration
     name: (identifier)
-    type: (function_type
-      (type_identifier
-        (identifier))
-      return_type: (type_identifier
-        (identifier)))))
+    value: (struct_definition
+      (struct_member
+        name: (identifier)
+        type: (type_identifier
+          (identifier)))
+      (struct_member
+        name: (identifier)
+        value: (function_definition
+          parameters: (parameter_list
+            (parameter
+              name: (identifier)
+              type: (type_identifier
+                (identifier))))
+          body: (block
+            (return_expression
+              (field_expression
+                object: (identifier)
+                field: (identifier)))))))))
 
 ===
-type declaration with simple type
+struct construction
 ===
 
-type Name = String
+let p = Point { x: 1, y: 2 }
 
 ---
 
 (source_file
-  (type_declaration
+  (let_declaration
     name: (identifier)
-    type: (type_identifier
-      (identifier))))
+    value: (struct_construction
+      type: (identifier)
+      (table_field
+        key: (identifier)
+        value: (integer))
+      (table_field
+        key: (identifier)
+        value: (integer)))))
 
 ===
-function type with no params
+for loop with range
 ===
 
-type Callback = function() -> Boolean
+for (0...5) |i| { print(i) }
 
 ---
 
 (source_file
-  (type_declaration
-    name: (identifier)
-    type: (function_type
-      return_type: (type_identifier
-        (identifier)))))
+  (for_statement
+    inputs: (for_input_list
+      (for_input
+        (range_literal
+          start: (integer)
+          end: (integer))))
+    bindings: (for_binding_list
+      (identifier))
+    body: (block
+      (call_expression
+        function: (identifier)
+        arguments: (argument_list
+          (identifier))))))
 
 ===
-function type with multiple params
+template string
 ===
 
-type BinOp = function(Number, Number) -> Number
+let x = string {
+    hello
+}
 
 ---
 
 (source_file
-  (type_declaration
+  (let_declaration
     name: (identifier)
-    type: (function_type
-      (type_identifier
-        (identifier))
-      (type_identifier
-        (identifier))
-      return_type: (type_identifier
-        (identifier)))))
+    value: (template_string
+      (template_content))))
 
 ===
 nested optional type

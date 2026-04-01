@@ -6,7 +6,7 @@ module.exports = grammar({
 
   extras: ($) => [/\s/, $.comment],
 
-  conflicts: ($) => [[$.block, $.table_literal]],
+  conflicts: ($) => [],
 
   word: ($) => $.identifier,
 
@@ -16,11 +16,11 @@ module.exports = grammar({
     _statement: ($) =>
       choice(
         $.let_declaration,
-        $.type_declaration,
         $.assignment,
         $.index_assignment,
         $.field_assignment,
         $.while_statement,
+        $.for_statement,
         $.if_expression,
         $._expression,
       ),
@@ -30,14 +30,17 @@ module.exports = grammar({
     let_declaration: ($) =>
       seq(
         "let",
-        field("name", $.identifier),
+        field("name", choice($.identifier, $.table_destructure, $.array_destructure)),
         optional(seq(":", field("type", $._type_expression))),
         "=",
-        field("value", choice($.enum_definition, $._expression)),
+        field("value", choice($.enum_definition, $.struct_definition, $._expression)),
       ),
 
-    type_declaration: ($) =>
-      seq("type", field("name", $.identifier), "=", field("type", $._type_expression)),
+    table_destructure: ($) =>
+      seq("{", $.identifier, repeat(seq(",", $.identifier)), optional(","), "}"),
+
+    array_destructure: ($) =>
+      seq("[", $.identifier, repeat(seq(",", $.identifier)), optional(","), "]"),
 
     assignment: ($) =>
       prec.right(
@@ -70,7 +73,7 @@ module.exports = grammar({
         ),
       ),
 
-    // --- While / If ---
+    // --- While / For / If ---
 
     while_statement: ($) =>
       seq(
@@ -80,6 +83,33 @@ module.exports = grammar({
         ")",
         field("body", $.block),
       ),
+
+    for_statement: ($) =>
+      seq(
+        "for",
+        "(",
+        field("inputs", $.for_input_list),
+        ")",
+        "|",
+        field("bindings", $.for_binding_list),
+        "|",
+        field("body", $.block),
+      ),
+
+    for_input_list: ($) =>
+      seq($.for_input, repeat(seq(",", $.for_input))),
+
+    for_input: ($) =>
+      choice($.range_literal, $._expression),
+
+    range_literal: ($) =>
+      choice(
+        seq(field("start", $._expression), "..", optional(field("end", $._expression))),
+        seq(field("start", $._expression), "...", field("end", $._expression)),
+      ),
+
+    for_binding_list: ($) =>
+      seq($.identifier, repeat(seq(",", $.identifier))),
 
     if_expression: ($) =>
       prec.right(
@@ -99,11 +129,13 @@ module.exports = grammar({
       choice(
         $.match_expression,
         $.function_definition,
+        $.template_string,
         $.continue_expression,
         $.return_expression,
         $.binary_expression,
         $.unary_expression,
         $.call_expression,
+        $.struct_construction,
         $.index_expression,
         $.field_expression,
         $.parenthesized_expression,
@@ -165,6 +197,20 @@ module.exports = grammar({
       ),
 
     argument_list: ($) => seq($._expression, repeat(seq(",", $._expression))),
+
+    // Struct construction: TypeName { field: expr, ... }
+    struct_construction: ($) =>
+      prec(
+        8,
+        seq(
+          field("type", $.identifier),
+          "{",
+          optional(
+            seq($.table_field, repeat(seq(",", $.table_field)), optional(",")),
+          ),
+          "}",
+        ),
+      ),
 
     index_expression: ($) =>
       prec(
@@ -232,7 +278,6 @@ module.exports = grammar({
 
     negative_literal: ($) => prec(7, seq("-", choice($.integer, $.float))),
 
-    // Dotted: Color.red or Shape.circle(binding)
     enum_variant_pattern: ($) =>
       seq(
         field("enum", $.identifier),
@@ -241,7 +286,6 @@ module.exports = grammar({
         optional(seq("(", field("binding", $.identifier), ")")),
       ),
 
-    // Direct: Value(binding) or Error(binding)
     variant_pattern: ($) =>
       seq(field("variant", $.identifier), "(", field("binding", $.identifier), ")"),
 
@@ -262,6 +306,41 @@ module.exports = grammar({
         field("name", $.identifier),
         optional(seq("=", field("value", $._expression))),
       ),
+
+    // --- Structs ---
+
+    struct_definition: ($) =>
+      seq(
+        "struct",
+        "{",
+        optional(
+          seq($.struct_member, repeat(seq(",", $.struct_member)), optional(",")),
+        ),
+        "}",
+      ),
+
+    struct_member: ($) =>
+      choice(
+        // Data field: name: Type
+        seq(field("name", $.identifier), ":", field("type", $._type_expression)),
+        // Method: name = function(...) { }
+        seq(field("name", $.identifier), "=", field("value", $.function_definition)),
+      ),
+
+    // --- Template strings ---
+
+    template_string: ($) =>
+      seq(
+        "string",
+        "{",
+        repeat(choice($.template_content, $.template_interpolation)),
+        "}",
+      ),
+
+    template_content: (_) => /[^|{}]+/,
+
+    template_interpolation: ($) =>
+      seq("|", field("expression", $.identifier), "|"),
 
     // --- Functions ---
 
