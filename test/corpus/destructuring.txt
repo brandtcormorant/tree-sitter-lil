@@ -1,0 +1,93 @@
+===
+table destructure
+===
+
+let {x, y} = point
+
+---
+
+(source_file
+  (let_declaration
+    name: (table_destructure
+      (identifier)
+      (identifier))
+    value: (identifier)))
+
+===
+array destructure
+===
+
+let [a, b] = pair
+
+---
+
+(source_file
+  (let_declaration
+    name: (array_destructure
+      (identifier)
+      (identifier))
+    value: (identifier)))
+
+===
+table destructure with three names
+===
+
+let {x, y, z} = vec
+
+---
+
+(source_file
+  (let_declaration
+    name: (table_destructure
+      (identifier)
+      (identifier)
+      (identifier))
+    value: (identifier)))
+
+===
+function with table destructure parameter
+===
+
+let dist = function({x, y}) { return x * x + y * y }
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (function_definition
+      parameters: (parameter_list
+        (parameter
+          name: (identifier)
+          name: (identifier)))
+      body: (block
+        (return_expression
+          (binary_expression
+            left: (binary_expression
+              left: (identifier)
+              right: (identifier))
+            right: (binary_expression
+              left: (identifier)
+              right: (identifier))))))))
+
+===
+function with array destructure parameter
+===
+
+let sum_pair = function([a, b]) { return a + b }
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (function_definition
+      parameters: (parameter_list
+        (parameter
+          name: (identifier)
+          name: (identifier)))
+      body: (block
+        (return_expression
+          (binary_expression
+            left: (identifier)
+            right: (identifier)))))))

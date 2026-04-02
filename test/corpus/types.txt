@@ -173,3 +173,128 @@ let x: ??Number = nil
         inner: (type_identifier
           (identifier))))
     value: (nil)))
+
+===
+type alias
+===
+
+let Num = type Number
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (type_alias
+      type: (type_identifier
+        (identifier)))))
+
+===
+type alias with optional
+===
+
+let MaybeNum = type ?Number
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (type_alias
+      type: (optional_type
+        inner: (type_identifier
+          (identifier))))))
+
+===
+function type annotation
+===
+
+let f: function(Number, Number) Number = add
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    type: (function_type
+      (type_identifier
+        (identifier))
+      (type_identifier
+        (identifier))
+      return_type: (type_identifier
+        (identifier)))
+    value: (identifier)))
+
+===
+function type with error marker
+===
+
+let f: function(Number)! Number = safe
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    type: (function_type
+      (type_identifier
+        (identifier))
+      return_type: (type_identifier
+        (identifier)))
+    value: (identifier)))
+
+===
+struct type annotation
+===
+
+let p: {x: Number, y: Number} = val
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    type: (struct_type
+      (type_field
+        name: (identifier)
+        type: (type_identifier
+          (identifier)))
+      (type_field
+        name: (identifier)
+        type: (type_identifier
+          (identifier))))
+    value: (identifier)))
+
+===
+type alias with function type
+===
+
+let Handler = type function(String) Number
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (type_alias
+      type: (function_type
+        (type_identifier
+          (identifier))
+        return_type: (type_identifier
+          (identifier))))))
+
+===
+function type no params
+===
+
+let f: function() Number = g
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    type: (function_type
+      return_type: (type_identifier
+        (identifier)))
+    value: (identifier)))

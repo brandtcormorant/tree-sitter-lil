@@ -1,0 +1,64 @@
+===
+template string with interpolation
+===
+
+let x = string {hello |name|!}
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (template_string
+      (template_content)
+      (template_interpolation
+        expression: (identifier))
+      (template_content))))
+
+===
+template string with multiple interpolations
+===
+
+let x = string {a |b| c |d| e}
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (template_string
+      (template_content)
+      (template_interpolation
+        expression: (identifier))
+      (template_content)
+      (template_interpolation
+        expression: (identifier))
+      (template_content))))
+
+===
+empty template string
+===
+
+let x = string {}
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (template_string)))
+
+===
+template string only interpolation
+===
+
+let x = string {|name|}
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (template_string
+      (template_interpolation
+        expression: (identifier)))))

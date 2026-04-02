@@ -347,6 +347,167 @@ match (name) {
           (integer))))))
 
 ===
+match arm with pipe binding
+===
+
+match (result) {
+  1 |val| { val }
+  _ { 0 }
+}
+
+---
+
+(source_file
+  (match_expression
+    scrutinee: (identifier)
+    (match_body
+      (match_arm
+        pattern: (integer)
+        binding: (identifier)
+        body: (block
+          (identifier)))
+      (match_arm
+        pattern: (identifier)
+        body: (block
+          (integer))))))
+
+===
+match with result pipe bindings
+===
+
+match (safe(x)) {
+  Value |v| { v }
+  Error |e| { e }
+  _ { nil }
+}
+
+---
+
+(source_file
+  (match_expression
+    scrutinee: (call_expression
+      function: (identifier)
+      arguments: (argument_list
+        (identifier)))
+    (match_body
+      (match_arm
+        pattern: (identifier)
+        binding: (identifier)
+        body: (block
+          (identifier)))
+      (match_arm
+        pattern: (identifier)
+        binding: (identifier)
+        body: (block
+          (identifier)))
+      (match_arm
+        pattern: (identifier)
+        body: (block
+          (nil))))))
+
+===
+match with nil pattern
+===
+
+match (x) {
+  nil { "nothing" }
+  _ { "something" }
+}
+
+---
+
+(source_file
+  (match_expression
+    scrutinee: (identifier)
+    (match_body
+      (match_arm
+        pattern: (nil)
+        body: (block
+          (string)))
+      (match_arm
+        pattern: (identifier)
+        body: (block
+          (string))))))
+
+===
+match with negative literal pattern
+===
+
+match (n) {
+  -1 { "negative one" }
+  0 { "zero" }
+  _ { "other" }
+}
+
+---
+
+(source_file
+  (match_expression
+    scrutinee: (identifier)
+    (match_body
+      (match_arm
+        pattern: (negative_literal
+          (integer))
+        body: (block
+          (string)))
+      (match_arm
+        pattern: (integer)
+        body: (block
+          (string)))
+      (match_arm
+        pattern: (identifier)
+        body: (block
+          (string))))))
+
+===
+match with float pattern
+===
+
+match (x) {
+  3.14 { "pi" }
+  _ { "other" }
+}
+
+---
+
+(source_file
+  (match_expression
+    scrutinee: (identifier)
+    (match_body
+      (match_arm
+        pattern: (float)
+        body: (block
+          (string)))
+      (match_arm
+        pattern: (identifier)
+        body: (block
+          (string))))))
+
+===
+match with false pattern
+===
+
+match (flag) {
+  false { "no" }
+  true { "yes" }
+}
+
+---
+
+(source_file
+  (match_expression
+    scrutinee: (identifier)
+    (match_body
+      (match_arm
+        pattern: (false)
+        body: (block
+          (string)))
+      (match_arm
+        pattern: (true)
+        body: (block
+          (string))))))
+
+===
 labeled match with labeled continue
 ===
 

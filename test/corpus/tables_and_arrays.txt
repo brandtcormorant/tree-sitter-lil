@@ -174,3 +174,90 @@ trailing comma in array
     (integer)
     (integer)
     (integer)))
+
+===
+shorthand table field
+===
+
+{ x, y }
+
+---
+
+(source_file
+  (table_literal
+    (table_field
+      key: (identifier))
+    (table_field
+      key: (identifier))))
+
+===
+mixed shorthand and explicit fields
+===
+
+{ x, y: 10 }
+
+---
+
+(source_file
+  (table_literal
+    (table_field
+      key: (identifier))
+    (table_field
+      key: (identifier)
+      value: (integer))))
+
+===
+nested table
+===
+
+{ inner: { x: 1, y: 2 } }
+
+---
+
+(source_file
+  (table_literal
+    (table_field
+      key: (identifier)
+      value: (table_literal
+        (table_field
+          key: (identifier)
+          value: (integer))
+        (table_field
+          key: (identifier)
+          value: (integer))))))
+
+===
+nested array
+===
+
+[[1, 2], [3, 4]]
+
+---
+
+(source_file
+  (array_literal
+    (array_literal
+      (integer)
+      (integer))
+    (array_literal
+      (integer)
+      (integer))))
+
+===
+array of tables
+===
+
+[{ x: 1 }, { x: 2 }]
+
+---
+
+(source_file
+  (array_literal
+    (table_literal
+      (table_field
+        key: (identifier)
+        value: (integer)))
+    (table_literal
+      (table_field
+        key: (identifier)
+        value: (integer)))))

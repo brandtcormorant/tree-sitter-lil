@@ -1,0 +1,146 @@
+===
+for with exclusive range
+===
+
+for (0..5) |i| { print(i) }
+
+---
+
+(source_file
+  (for_statement
+    inputs: (for_input_list
+      (for_input
+        (range_literal
+          start: (integer)
+          end: (integer))))
+    bindings: (for_binding_list
+      (identifier))
+    body: (block
+      (call_expression
+        function: (identifier)
+        arguments: (argument_list
+          (identifier))))))
+
+===
+for with open range
+===
+
+for (0..) |i| { print(i) }
+
+---
+
+(source_file
+  (for_statement
+    inputs: (for_input_list
+      (for_input
+        (range_literal
+          start: (integer))))
+    bindings: (for_binding_list
+      (identifier))
+    body: (block
+      (call_expression
+        function: (identifier)
+        arguments: (argument_list
+          (identifier))))))
+
+===
+for with expression input
+===
+
+for (arr) |x| { print(x) }
+
+---
+
+(source_file
+  (for_statement
+    inputs: (for_input_list
+      (for_input
+        (identifier)))
+    bindings: (for_binding_list
+      (identifier))
+    body: (block
+      (call_expression
+        function: (identifier)
+        arguments: (argument_list
+          (identifier))))))
+
+===
+for with multiple inputs and bindings
+===
+
+for (arr, 0..) |value, index| { print(index) }
+
+---
+
+(source_file
+  (for_statement
+    inputs: (for_input_list
+      (for_input
+        (identifier))
+      (for_input
+        (range_literal
+          start: (integer))))
+    bindings: (for_binding_list
+      (identifier)
+      (identifier))
+    body: (block
+      (call_expression
+        function: (identifier)
+        arguments: (argument_list
+          (identifier))))))
+
+===
+for with call expression input
+===
+
+for (range(0, 10)) |i| { print(i) }
+
+---
+
+(source_file
+  (for_statement
+    inputs: (for_input_list
+      (for_input
+        (call_expression
+          function: (identifier)
+          arguments: (argument_list
+            (integer)
+            (integer)))))
+    bindings: (for_binding_list
+      (identifier))
+    body: (block
+      (call_expression
+        function: (identifier)
+        arguments: (argument_list
+          (identifier))))))
+
+===
+for with multi-statement body
+===
+
+for (0...3) |i| {
+    let x = i * 2
+    print(x)
+}
+
+---
+
+(source_file
+  (for_statement
+    inputs: (for_input_list
+      (for_input
+        (range_literal
+          start: (integer)
+          end: (integer))))
+    bindings: (for_binding_list
+      (identifier))
+    body: (block
+      (let_declaration
+        name: (identifier)
+        value: (binary_expression
+          left: (identifier)
+          right: (integer)))
+      (call_expression
+        function: (identifier)
+        arguments: (argument_list
+          (identifier))))))

@@ -131,3 +131,144 @@ n + (n - 1)
       (binary_expression
         left: (identifier)
         right: (integer)))))
+
+===
+try expression
+===
+
+try f()
+
+---
+
+(source_file
+  (unary_expression
+    operand: (call_expression
+      function: (identifier))))
+
+===
+try with binary expression
+===
+
+try 20 + 22
+
+---
+
+(source_file
+  (binary_expression
+    left: (unary_expression
+      operand: (integer))
+    right: (integer)))
+
+===
+chained field access
+===
+
+a.b.c
+
+---
+
+(source_file
+  (field_expression
+    object: (field_expression
+      object: (identifier)
+      field: (identifier))
+    field: (identifier)))
+
+===
+chained index and field
+===
+
+a[0].name
+
+---
+
+(source_file
+  (field_expression
+    object: (index_expression
+      object: (identifier)
+      index: (integer))
+    field: (identifier)))
+
+===
+return expression
+===
+
+return 42
+
+---
+
+(source_file
+  (return_expression
+    (integer)))
+
+===
+continue expression
+===
+
+continue n - 1
+
+---
+
+(source_file
+  (continue_expression
+    (binary_expression
+      left: (identifier)
+      right: (integer))))
+
+===
+chained method calls
+===
+
+arr.push(1).length()
+
+---
+
+(source_file
+  (call_expression
+    function: (field_expression
+      object: (call_expression
+        function: (field_expression
+          object: (identifier)
+          field: (identifier))
+        arguments: (argument_list
+          (integer)))
+      field: (identifier))))
+
+===
+division
+===
+
+10 / 3
+
+---
+
+(source_file
+  (binary_expression
+    left: (integer)
+    right: (integer)))
+
+===
+less than or equal
+===
+
+a <= b
+
+---
+
+(source_file
+  (binary_expression
+    left: (identifier)
+    right: (identifier)))
+
+===
+greater than or equal
+===
+
+a >= b
+
+---
+
+(source_file
+  (binary_expression
+    left: (identifier)
+    right: (identifier)))
