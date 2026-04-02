@@ -33,7 +33,7 @@ module.exports = grammar({
         field("name", choice($.identifier, $.table_destructure, $.array_destructure)),
         optional(seq(":", field("type", $._type_expression))),
         "=",
-        field("value", choice($.enum_definition, $.struct_definition, $._expression)),
+        field("value", choice($.enum_definition, $.struct_definition, $.type_alias, $._expression)),
       ),
 
     table_destructure: ($) =>
@@ -327,6 +327,11 @@ module.exports = grammar({
         seq(field("name", $.identifier), "=", field("value", $.function_definition)),
       ),
 
+    // --- Type alias ---
+
+    type_alias: ($) =>
+      seq("type", field("type", $._type_expression)),
+
     // --- Template strings ---
 
     template_string: ($) =>
@@ -351,7 +356,7 @@ module.exports = grammar({
         field("parameters", optional($.parameter_list)),
         ")",
         optional(field("error_marker", "!")),
-        optional(seq("->", field("return_type", $._type_expression))),
+        optional(field("return_type", choice($.type_identifier, $.optional_type, $.function_type))),
         field("body", $.block),
       ),
 
@@ -439,11 +444,8 @@ module.exports = grammar({
           ),
         ),
         ")",
-        optional(choice(
-          seq(field("error_marker", "!"), "->", field("return_type", $._type_expression)),
-          seq(field("error_marker", "!")),
-          seq("->", field("return_type", $._type_expression)),
-        )),
+        optional(field("error_marker", "!")),
+        optional(field("return_type", $._type_expression)),
       )),
 
     // --- Primaries ---

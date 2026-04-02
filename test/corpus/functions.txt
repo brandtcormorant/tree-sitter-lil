@@ -194,7 +194,7 @@ let add = function(a: Number, b: Number) { return a + b }
 function with return type
 ===
 
-let add = function(a, b) -> Number { return a + b }
+let add = function(a, b) Number { return a + b }
 
 ---
 
@@ -242,7 +242,7 @@ let safe_div = function(a, b)! { return a / b }
 function with error marker and return type
 ===
 
-let safe_div = function(a: Number, b: Number)! -> Number { return a / b }
+let safe_div = function(a: Number, b: Number)! Number { return a / b }
 
 ---
 
