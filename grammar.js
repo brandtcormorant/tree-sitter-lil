@@ -22,6 +22,7 @@ module.exports = grammar({
         $.while_statement,
         $.for_statement,
         $.if_expression,
+        $.defer_statement,
         $._expression,
       ),
 
@@ -33,7 +34,7 @@ module.exports = grammar({
         field("name", choice($.identifier, $.table_destructure, $.array_destructure)),
         optional(seq(":", field("type", $._type_expression))),
         "=",
-        field("value", choice($.enum_definition, $.struct_definition, $.type_alias, $._expression)),
+        field("value", choice($.enum_definition, $.struct_definition, $.actor_definition, $.type_alias, $._expression)),
       ),
 
     table_destructure: ($) =>
@@ -123,6 +124,11 @@ module.exports = grammar({
         ),
       ),
 
+    // --- Defer ---
+
+    defer_statement: ($) =>
+      seq("defer", field("expression", $._expression)),
+
     // --- Expressions ---
 
     _expression: ($) =>
@@ -139,7 +145,8 @@ module.exports = grammar({
         $.index_expression,
         $.field_expression,
         $.parenthesized_expression,
-        $.table_literal,
+        $.record_literal,
+        $.record_explicit,
         $.array_literal,
         $._primary,
       ),
@@ -206,7 +213,7 @@ module.exports = grammar({
           field("type", $.identifier),
           "{",
           optional(
-            seq($.table_field, repeat(seq(",", $.table_field)), optional(",")),
+            seq($.record_field, repeat(seq(",", $.record_field)), optional(",")),
           ),
           "}",
         ),
@@ -327,6 +334,21 @@ module.exports = grammar({
         seq(field("name", $.identifier), "=", field("value", $.function_definition)),
       ),
 
+    // --- Actors ---
+
+    actor_definition: ($) =>
+      seq(
+        "actor",
+        "{",
+        optional(
+          seq($.actor_field, repeat(seq(",", $.actor_field)), optional(",")),
+        ),
+        "}",
+      ),
+
+    actor_field: ($) =>
+      seq(field("name", $.identifier), "=", field("value", $._expression)),
+
     // --- Type alias ---
 
     type_alias: ($) =>
@@ -383,16 +405,26 @@ module.exports = grammar({
 
     // --- Composite literals ---
 
-    table_literal: ($) =>
+    record_literal: ($) =>
       seq(
         "{",
         optional(
-          seq($.table_field, repeat(seq(",", $.table_field)), optional(",")),
+          seq($.record_field, repeat(seq(",", $.record_field)), optional(",")),
         ),
         "}",
       ),
 
-    table_field: ($) =>
+    record_explicit: ($) =>
+      seq(
+        "record",
+        "{",
+        optional(
+          seq($.record_field, repeat(seq(",", $.record_field)), optional(",")),
+        ),
+        "}",
+      ),
+
+    record_field: ($) =>
       choice(
         seq(field("key", $.identifier), ":", field("value", $._expression)),
         field("key", $.identifier),

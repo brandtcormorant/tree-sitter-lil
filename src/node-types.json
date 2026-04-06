@@ -1,5 +1,130 @@
 [
   {
+    "type": "actor_definition",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "actor_field",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "actor_field",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "array_literal",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "continue_expression",
+            "named": true
+          },
+          {
+            "type": "false",
+            "named": true
+          },
+          {
+            "type": "field_expression",
+            "named": true
+          },
+          {
+            "type": "float",
+            "named": true
+          },
+          {
+            "type": "function_definition",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "index_expression",
+            "named": true
+          },
+          {
+            "type": "integer",
+            "named": true
+          },
+          {
+            "type": "match_expression",
+            "named": true
+          },
+          {
+            "type": "nil",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "record_explicit",
+            "named": true
+          },
+          {
+            "type": "record_literal",
+            "named": true
+          },
+          {
+            "type": "return_expression",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "struct_construction",
+            "named": true
+          },
+          {
+            "type": "template_string",
+            "named": true
+          },
+          {
+            "type": "true",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "argument_list",
     "named": true,
     "fields": {},
@@ -64,6 +189,14 @@
           "named": true
         },
         {
+          "type": "record_explicit",
+          "named": true
+        },
+        {
+          "type": "record_literal",
+          "named": true
+        },
+        {
           "type": "return_expression",
           "named": true
         },
@@ -73,10 +206,6 @@
         },
         {
           "type": "struct_construction",
-          "named": true
-        },
-        {
-          "type": "table_literal",
           "named": true
         },
         {
@@ -174,6 +303,14 @@
           "named": true
         },
         {
+          "type": "record_explicit",
+          "named": true
+        },
+        {
+          "type": "record_literal",
+          "named": true
+        },
+        {
           "type": "return_expression",
           "named": true
         },
@@ -183,10 +320,6 @@
         },
         {
           "type": "struct_construction",
-          "named": true
-        },
-        {
-          "type": "table_literal",
           "named": true
         },
         {
@@ -279,6 +412,14 @@
             "named": true
           },
           {
+            "type": "record_explicit",
+            "named": true
+          },
+          {
+            "type": "record_literal",
+            "named": true
+          },
+          {
             "type": "return_expression",
             "named": true
           },
@@ -288,10 +429,6 @@
           },
           {
             "type": "struct_construction",
-            "named": true
-          },
-          {
-            "type": "table_literal",
             "named": true
           },
           {
@@ -375,6 +512,14 @@
             "named": true
           },
           {
+            "type": "record_explicit",
+            "named": true
+          },
+          {
+            "type": "record_literal",
+            "named": true
+          },
+          {
             "type": "return_expression",
             "named": true
           },
@@ -384,10 +529,6 @@
           },
           {
             "type": "struct_construction",
-            "named": true
-          },
-          {
-            "type": "table_literal",
             "named": true
           },
           {
@@ -523,6 +664,14 @@
             "named": true
           },
           {
+            "type": "record_explicit",
+            "named": true
+          },
+          {
+            "type": "record_literal",
+            "named": true
+          },
+          {
             "type": "return_expression",
             "named": true
           },
@@ -532,10 +681,6 @@
           },
           {
             "type": "struct_construction",
-            "named": true
-          },
-          {
-            "type": "table_literal",
             "named": true
           },
           {
@@ -580,6 +725,10 @@
         },
         {
           "type": "continue_expression",
+          "named": true
+        },
+        {
+          "type": "defer_statement",
           "named": true
         },
         {
@@ -643,6 +792,14 @@
           "named": true
         },
         {
+          "type": "record_explicit",
+          "named": true
+        },
+        {
+          "type": "record_literal",
+          "named": true
+        },
+        {
           "type": "return_expression",
           "named": true
         },
@@ -652,10 +809,6 @@
         },
         {
           "type": "struct_construction",
-          "named": true
-        },
-        {
-          "type": "table_literal",
           "named": true
         },
         {
@@ -752,6 +905,14 @@
             "named": true
           },
           {
+            "type": "record_explicit",
+            "named": true
+          },
+          {
+            "type": "record_literal",
+            "named": true
+          },
+          {
             "type": "return_expression",
             "named": true
           },
@@ -761,10 +922,6 @@
           },
           {
             "type": "struct_construction",
-            "named": true
-          },
-          {
-            "type": "table_literal",
             "named": true
           },
           {
@@ -859,6 +1016,14 @@
           "named": true
         },
         {
+          "type": "record_explicit",
+          "named": true
+        },
+        {
+          "type": "record_literal",
+          "named": true
+        },
+        {
           "type": "return_expression",
           "named": true
         },
@@ -868,10 +1033,6 @@
         },
         {
           "type": "struct_construction",
-          "named": true
-        },
-        {
-          "type": "table_literal",
           "named": true
         },
         {
@@ -887,6 +1048,106 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "defer_statement",
+    "named": true,
+    "fields": {
+      "expression": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "array_literal",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "continue_expression",
+            "named": true
+          },
+          {
+            "type": "false",
+            "named": true
+          },
+          {
+            "type": "field_expression",
+            "named": true
+          },
+          {
+            "type": "float",
+            "named": true
+          },
+          {
+            "type": "function_definition",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "index_expression",
+            "named": true
+          },
+          {
+            "type": "integer",
+            "named": true
+          },
+          {
+            "type": "match_expression",
+            "named": true
+          },
+          {
+            "type": "nil",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "record_explicit",
+            "named": true
+          },
+          {
+            "type": "record_literal",
+            "named": true
+          },
+          {
+            "type": "return_expression",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "struct_construction",
+            "named": true
+          },
+          {
+            "type": "template_string",
+            "named": true
+          },
+          {
+            "type": "true",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -979,6 +1240,14 @@
             "named": true
           },
           {
+            "type": "record_explicit",
+            "named": true
+          },
+          {
+            "type": "record_literal",
+            "named": true
+          },
+          {
             "type": "return_expression",
             "named": true
           },
@@ -988,10 +1257,6 @@
           },
           {
             "type": "struct_construction",
-            "named": true
-          },
-          {
-            "type": "table_literal",
             "named": true
           },
           {
@@ -1121,6 +1386,14 @@
             "named": true
           },
           {
+            "type": "record_explicit",
+            "named": true
+          },
+          {
+            "type": "record_literal",
+            "named": true
+          },
+          {
             "type": "return_expression",
             "named": true
           },
@@ -1130,10 +1403,6 @@
           },
           {
             "type": "struct_construction",
-            "named": true
-          },
-          {
-            "type": "table_literal",
             "named": true
           },
           {
@@ -1211,6 +1480,14 @@
             "named": true
           },
           {
+            "type": "record_explicit",
+            "named": true
+          },
+          {
+            "type": "record_literal",
+            "named": true
+          },
+          {
             "type": "return_expression",
             "named": true
           },
@@ -1220,10 +1497,6 @@
           },
           {
             "type": "struct_construction",
-            "named": true
-          },
-          {
-            "type": "table_literal",
             "named": true
           },
           {
@@ -1317,6 +1590,14 @@
             "named": true
           },
           {
+            "type": "record_explicit",
+            "named": true
+          },
+          {
+            "type": "record_literal",
+            "named": true
+          },
+          {
             "type": "return_expression",
             "named": true
           },
@@ -1326,10 +1607,6 @@
           },
           {
             "type": "struct_construction",
-            "named": true
-          },
-          {
-            "type": "table_literal",
             "named": true
           },
           {
@@ -1432,6 +1709,14 @@
           "named": true
         },
         {
+          "type": "record_explicit",
+          "named": true
+        },
+        {
+          "type": "record_literal",
+          "named": true
+        },
+        {
           "type": "return_expression",
           "named": true
         },
@@ -1441,10 +1726,6 @@
         },
         {
           "type": "struct_construction",
-          "named": true
-        },
-        {
-          "type": "table_literal",
           "named": true
         },
         {
@@ -1706,6 +1987,14 @@
             "named": true
           },
           {
+            "type": "record_explicit",
+            "named": true
+          },
+          {
+            "type": "record_literal",
+            "named": true
+          },
+          {
             "type": "return_expression",
             "named": true
           },
@@ -1715,10 +2004,6 @@
           },
           {
             "type": "struct_construction",
-            "named": true
-          },
-          {
-            "type": "table_literal",
             "named": true
           },
           {
@@ -1812,6 +2097,14 @@
             "named": true
           },
           {
+            "type": "record_explicit",
+            "named": true
+          },
+          {
+            "type": "record_literal",
+            "named": true
+          },
+          {
             "type": "return_expression",
             "named": true
           },
@@ -1821,10 +2114,6 @@
           },
           {
             "type": "struct_construction",
-            "named": true
-          },
-          {
-            "type": "table_literal",
             "named": true
           },
           {
@@ -1902,6 +2191,14 @@
             "named": true
           },
           {
+            "type": "record_explicit",
+            "named": true
+          },
+          {
+            "type": "record_literal",
+            "named": true
+          },
+          {
             "type": "return_expression",
             "named": true
           },
@@ -1911,10 +2208,6 @@
           },
           {
             "type": "struct_construction",
-            "named": true
-          },
-          {
-            "type": "table_literal",
             "named": true
           },
           {
@@ -1992,6 +2285,14 @@
             "named": true
           },
           {
+            "type": "record_explicit",
+            "named": true
+          },
+          {
+            "type": "record_literal",
+            "named": true
+          },
+          {
             "type": "return_expression",
             "named": true
           },
@@ -2001,10 +2302,6 @@
           },
           {
             "type": "struct_construction",
-            "named": true
-          },
-          {
-            "type": "table_literal",
             "named": true
           },
           {
@@ -2088,6 +2385,14 @@
             "named": true
           },
           {
+            "type": "record_explicit",
+            "named": true
+          },
+          {
+            "type": "record_literal",
+            "named": true
+          },
+          {
             "type": "return_expression",
             "named": true
           },
@@ -2097,10 +2402,6 @@
           },
           {
             "type": "struct_construction",
-            "named": true
-          },
-          {
-            "type": "table_literal",
             "named": true
           },
           {
@@ -2178,6 +2479,14 @@
             "named": true
           },
           {
+            "type": "record_explicit",
+            "named": true
+          },
+          {
+            "type": "record_literal",
+            "named": true
+          },
+          {
             "type": "return_expression",
             "named": true
           },
@@ -2187,10 +2496,6 @@
           },
           {
             "type": "struct_construction",
-            "named": true
-          },
-          {
-            "type": "table_literal",
             "named": true
           },
           {
@@ -2273,6 +2578,10 @@
         "required": true,
         "types": [
           {
+            "type": "actor_definition",
+            "named": true
+          },
+          {
             "type": "array_literal",
             "named": true
           },
@@ -2333,6 +2642,14 @@
             "named": true
           },
           {
+            "type": "record_explicit",
+            "named": true
+          },
+          {
+            "type": "record_literal",
+            "named": true
+          },
+          {
             "type": "return_expression",
             "named": true
           },
@@ -2346,10 +2663,6 @@
           },
           {
             "type": "struct_definition",
-            "named": true
-          },
-          {
-            "type": "table_literal",
             "named": true
           },
           {
@@ -2534,6 +2847,14 @@
             "named": true
           },
           {
+            "type": "record_explicit",
+            "named": true
+          },
+          {
+            "type": "record_literal",
+            "named": true
+          },
+          {
             "type": "return_expression",
             "named": true
           },
@@ -2543,10 +2864,6 @@
           },
           {
             "type": "struct_construction",
-            "named": true
-          },
-          {
-            "type": "table_literal",
             "named": true
           },
           {
@@ -2740,6 +3057,14 @@
           "named": true
         },
         {
+          "type": "record_explicit",
+          "named": true
+        },
+        {
+          "type": "record_literal",
+          "named": true
+        },
+        {
           "type": "return_expression",
           "named": true
         },
@@ -2749,10 +3074,6 @@
         },
         {
           "type": "struct_construction",
-          "named": true
-        },
-        {
-          "type": "table_literal",
           "named": true
         },
         {
@@ -2835,6 +3156,14 @@
             "named": true
           },
           {
+            "type": "record_explicit",
+            "named": true
+          },
+          {
+            "type": "record_literal",
+            "named": true
+          },
+          {
             "type": "return_expression",
             "named": true
           },
@@ -2844,10 +3173,6 @@
           },
           {
             "type": "struct_construction",
-            "named": true
-          },
-          {
-            "type": "table_literal",
             "named": true
           },
           {
@@ -2925,6 +3250,14 @@
             "named": true
           },
           {
+            "type": "record_explicit",
+            "named": true
+          },
+          {
+            "type": "record_literal",
+            "named": true
+          },
+          {
             "type": "return_expression",
             "named": true
           },
@@ -2934,10 +3267,6 @@
           },
           {
             "type": "struct_construction",
-            "named": true
-          },
-          {
-            "type": "table_literal",
             "named": true
           },
           {
@@ -2954,6 +3283,146 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "record_explicit",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "record_field",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "record_field",
+    "named": true,
+    "fields": {
+      "key": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "array_literal",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "continue_expression",
+            "named": true
+          },
+          {
+            "type": "false",
+            "named": true
+          },
+          {
+            "type": "field_expression",
+            "named": true
+          },
+          {
+            "type": "float",
+            "named": true
+          },
+          {
+            "type": "function_definition",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "index_expression",
+            "named": true
+          },
+          {
+            "type": "integer",
+            "named": true
+          },
+          {
+            "type": "match_expression",
+            "named": true
+          },
+          {
+            "type": "nil",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "record_explicit",
+            "named": true
+          },
+          {
+            "type": "record_literal",
+            "named": true
+          },
+          {
+            "type": "return_expression",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "struct_construction",
+            "named": true
+          },
+          {
+            "type": "template_string",
+            "named": true
+          },
+          {
+            "type": "true",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "record_literal",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "record_field",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -3021,6 +3490,14 @@
           "named": true
         },
         {
+          "type": "record_explicit",
+          "named": true
+        },
+        {
+          "type": "record_literal",
+          "named": true
+        },
+        {
           "type": "return_expression",
           "named": true
         },
@@ -3030,10 +3507,6 @@
         },
         {
           "type": "struct_construction",
-          "named": true
-        },
-        {
-          "type": "table_literal",
           "named": true
         },
         {
@@ -3078,6 +3551,10 @@
         },
         {
           "type": "continue_expression",
+          "named": true
+        },
+        {
+          "type": "defer_statement",
           "named": true
         },
         {
@@ -3141,6 +3618,14 @@
           "named": true
         },
         {
+          "type": "record_explicit",
+          "named": true
+        },
+        {
+          "type": "record_literal",
+          "named": true
+        },
+        {
           "type": "return_expression",
           "named": true
         },
@@ -3150,10 +3635,6 @@
         },
         {
           "type": "struct_construction",
-          "named": true
-        },
-        {
-          "type": "table_literal",
           "named": true
         },
         {
@@ -3200,7 +3681,7 @@
       "required": false,
       "types": [
         {
-          "type": "table_field",
+          "type": "record_field",
           "named": true
         }
       ]
@@ -3294,127 +3775,6 @@
       "types": [
         {
           "type": "identifier",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "table_field",
-    "named": true,
-    "fields": {
-      "key": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
-      "value": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "array_literal",
-            "named": true
-          },
-          {
-            "type": "binary_expression",
-            "named": true
-          },
-          {
-            "type": "call_expression",
-            "named": true
-          },
-          {
-            "type": "continue_expression",
-            "named": true
-          },
-          {
-            "type": "false",
-            "named": true
-          },
-          {
-            "type": "field_expression",
-            "named": true
-          },
-          {
-            "type": "float",
-            "named": true
-          },
-          {
-            "type": "function_definition",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "index_expression",
-            "named": true
-          },
-          {
-            "type": "integer",
-            "named": true
-          },
-          {
-            "type": "match_expression",
-            "named": true
-          },
-          {
-            "type": "nil",
-            "named": true
-          },
-          {
-            "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "return_expression",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "struct_construction",
-            "named": true
-          },
-          {
-            "type": "table_literal",
-            "named": true
-          },
-          {
-            "type": "template_string",
-            "named": true
-          },
-          {
-            "type": "true",
-            "named": true
-          },
-          {
-            "type": "unary_expression",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "table_literal",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "table_field",
           "named": true
         }
       ]
@@ -3601,6 +3961,14 @@
             "named": true
           },
           {
+            "type": "record_explicit",
+            "named": true
+          },
+          {
+            "type": "record_literal",
+            "named": true
+          },
+          {
             "type": "return_expression",
             "named": true
           },
@@ -3610,10 +3978,6 @@
           },
           {
             "type": "struct_construction",
-            "named": true
-          },
-          {
-            "type": "table_literal",
             "named": true
           },
           {
@@ -3751,6 +4115,14 @@
             "named": true
           },
           {
+            "type": "record_explicit",
+            "named": true
+          },
+          {
+            "type": "record_literal",
+            "named": true
+          },
+          {
             "type": "return_expression",
             "named": true
           },
@@ -3760,10 +4132,6 @@
           },
           {
             "type": "struct_construction",
-            "named": true
-          },
-          {
-            "type": "table_literal",
             "named": true
           },
           {
@@ -3879,6 +4247,10 @@
     "named": false
   },
   {
+    "type": "actor",
+    "named": false
+  },
+  {
     "type": "and",
     "named": false
   },
@@ -3889,6 +4261,10 @@
   },
   {
     "type": "continue",
+    "named": false
+  },
+  {
+    "type": "defer",
     "named": false
   },
   {
@@ -3941,6 +4317,10 @@
   },
   {
     "type": "or",
+    "named": false
+  },
+  {
+    "type": "record",
     "named": false
   },
   {
